@@ -15,7 +15,6 @@ export class SignUpController implements Controller {
     try {
       const requiredFields = ['name', 'email', 'password', 'passwordConfirmation']
       for (const field of requiredFields) {
-        console.log('mano')
         if (!httpRequest.body[field]) return badRequest(new MissingParamError(field))
       }
 

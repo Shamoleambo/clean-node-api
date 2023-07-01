@@ -152,7 +152,6 @@ describe('SignUp Controller', () => {
   })
 
   test('should return 500 if AddAccount throws', async () => {
-    console.log('mano')
     const { sut, addAccountStub } = makeSut()
     jest.spyOn(addAccountStub, 'add').mockImplementationOnce(async () => {
       return await new Promise((resolve, reject) => { reject(new Error()) })
