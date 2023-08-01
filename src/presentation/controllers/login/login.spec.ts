@@ -1,5 +1,5 @@
 import { LoginController } from './login'
-import { badRequest, serverError, unauthorized } from '../../helpers/http-helper'
+import { badRequest, serverError, unauthorized, ok } from '../../helpers/http-helper'
 import { InvalidParamError, MissingParamError } from '../../errors'
 import type { EmailValidator, HttpRequest, Authentication } from './login-protocols'
 
@@ -108,5 +108,19 @@ describe('Login Controller', () => {
 
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(unauthorized())
+  })
+
+  test('should return 500 if Authentication throws', async () => {
+    const { sut, authenticationStub } = makeSut()
+    jest.spyOn(authenticationStub, 'auth').mockImplementationOnce(() => { throw new Error() })
+
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(serverError(new Error()))
+  })
+
+  test('should return 200 if valid credentials are provided', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(ok({ accessToken: 'any_token' }))
   })
 })
