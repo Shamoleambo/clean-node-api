@@ -13,8 +13,8 @@ describe('CompareFields Validation', () => {
 
   test('should not return if validation succeeds', () => {
     const sut = makeSut()
-    const validate = jest.spyOn(sut, 'validate')
+    const error = sut.validate({ field: 'value', fieldToCompare: 'value' })
 
-    expect(validate).not.toReturn()
+    expect(error).toBeFalsy()
   })
 })
