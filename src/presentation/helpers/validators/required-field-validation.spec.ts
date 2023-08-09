@@ -10,8 +10,8 @@ describe('RequiredField Validation', () => {
 
   test('Should not return if validation succeeds', () => {
     const sut = new RequiredFieldValidation('field')
-    const validate = jest.spyOn(sut, 'validate')
+    const error = sut.validate({ field: 'any_name' })
 
-    expect(validate).not.toHaveReturned()
+    expect(error).toBeFalsy()
   })
 })
