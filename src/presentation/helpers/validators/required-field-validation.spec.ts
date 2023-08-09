@@ -7,4 +7,11 @@ describe('RequiredField Validation', () => {
     const error = sut.validate({ name: 'any_name' })
     expect(error).toEqual(new MissingParamError('field'))
   })
+
+  test('Should not return if validation succeeds', () => {
+    const sut = new RequiredFieldValidation('field')
+    const validate = jest.spyOn(sut, 'validate')
+
+    expect(validate).not.toHaveReturned()
+  })
 })
